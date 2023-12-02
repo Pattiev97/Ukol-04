@@ -6,43 +6,42 @@ Doplňte do stránky JavaScriptový program, který pomocí funkce prompt požá
 const min = 0
 const max = 100
 
-const skillValue = document.querySelector(".skill__value")
-const skillBar = document.querySelector(".skill__progress")
 const skillHTML_ID = document.querySelector("#skill1")
 const skillCSS_ID = document.querySelector("#skill2")
 const skillJS_ID = document.querySelector("#skill3")
 
 const updateSkill = (ID, value) => {
-    if(value < min && value > max) {
-        alert("Zadejte hodnotu od 0 do 100")
-    } else {
-        skillValue.textContent = `${value} / 100`
-        skillBar.style.width = `${value}%`
-    }
+    ID.getElementsByClassName('skill__value')[0].textContent = `${value} / 100`;
+    ID.getElementsByClassName("skill__progress")[0].style.width = `${value}%`;
 }
 
 const setSkills = () => {
-    const skillHTML = prompt("Zadejte úroveň dovednosti v HTML (0-100)")
-    const skillCSS = prompt("Zadejte úroveň dovednosti v CSS (0-100)")
-    const skillJS = prompt("Zadejte úroveň dovednosti v JavaScriptu (0-100)")
+    let skillHTML, skillCSS, skillJS
+
+    do {
+        skillHTML = prompt("Zadejte úroveň dovednosti v HTML (0-100)")
+    } while (!checkNumber(skillHTML, "HTML"))
+
+    do {
+        skillCSS = prompt("Zadejte úroveň dovednosti v CSS (0-100)")
+    } while (!checkNumber(skillCSS, "CSS"))
+
+    do {
+        skillJS = prompt("Zadejte úroveň dovednosti v JavaScriptu (0-100)")
+    } while (!checkNumber(skillJS, "JavaScript"))
 
     updateSkill(skillHTML_ID, skillHTML)
     updateSkill(skillCSS_ID, skillCSS)
     updateSkill(skillJS_ID, skillJS)
 }
 
+const checkNumber = (skillNumber, skill) => {
+    const isValid = !isNaN(skillNumber) && (skillNumber >= min && skillNumber <= max);
+    if (!isValid) {
+        alert(`Pro dovednost ${skill} zadejte platnou číselnou hodnotu.`)
+    } return isValid
+}
+
 setSkills()
 
-
-
-
-/* pro posunutí lišty musím změnit .skill__progress.width v rámci css = CLASS pomocí . */
-/* pro jednotlivé oblasti (HTML, CSS a JS) musím změnit hodnoty skill__value v rámci html = ID pomocí # */
-
-
-/*Doplňte do stránky JavaScriptový program, který pomocí funkce prompt požádá uživatele aby vyjářil svoji úroveň postupně ve všech zobrazených dovednostech jako číslo 0–100. Program pak nastaví posuvníky na stránce na odpovídající délku a hodnoty u posuvníků na uživatelem zadaná čísla.*/
-
-
-// const skillHTML_ID = document.querySelector("#skill1")
-// const skillCSS_ID = document.querySelector("#skill2")
-// const skillJS_ID = document.querySelector("#skill3")
+document.title = "Vyhlídalová - Úkol 4"
